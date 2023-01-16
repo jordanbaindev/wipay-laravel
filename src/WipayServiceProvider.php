@@ -13,9 +13,9 @@ class WipayServiceProvider extends ServiceProvider
             __DIR__.'/../config/wipay.php' => config_path('wipay.php'),
         ]);
 
-        $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
-        $this->loadViewsFrom(__DIR__.'/resources/views', 'wipay');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'wipay');
     }
 
     public function register()

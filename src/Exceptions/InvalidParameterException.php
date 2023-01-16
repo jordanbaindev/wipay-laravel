@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace Jordanbaindev\Wipay\Exceptions;
 
 use Exception;
 

@@ -1,14 +1,12 @@
 <?php
 
-namespace Jordanbaindev\Wipay\App\Http\Controllers\API;
+namespace Jordanbaindev\Wipay\Controllers\API;
 
 use App\Exceptions\InvalidParameterException;
 use GuzzleHttp\Client;
-use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class AbstractAPI

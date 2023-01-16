@@ -3,7 +3,7 @@
 namespace Jordanbaindev\Wipay;
 
 use Jordanbain\FirstAtlanticCommerce\Support\VoucherValidation;
-use Jordanbaindev\Wipay\App\Http\Controllers\API\AbstractAPI;
+use Jordanbaindev\Wipay\Controllers\API\AbstractAPI;
 
 class WipayVoucher extends AbstractAPI
 {
