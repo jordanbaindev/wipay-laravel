@@ -1,0 +1,32 @@
+{
+    "name": "jordanbaindev/wipay-laravel",
+    "description": "laravel wrapper for wipay card processing and voucher API.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Jordanbaindev\\Wipay\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jordan bain",
+            "email": "jordanbaindev961@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.3"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jordanbaindev\\Wipay\\WipayServiceProvider"
+            ],
+            "aliases": {
+                "WipayCard": "Jordanbaindev\\Wipay\\Facade\\WipayCard",
+                "WipayVoucher": "Jordanbaindev\\Wipay\\Facade\\WipayVoucher"
+            }
+        }
+    }
+}
