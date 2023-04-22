@@ -2,7 +2,6 @@
 
 namespace Jordanbaindev\Wipay;
 
-use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
 class WipayServiceProvider extends ServiceProvider
@@ -11,9 +10,7 @@ class WipayServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../config/wipay.php' => config_path('wipay.php'),
-        ]);
-
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        ], 'wipay-config');
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'wipay');
     }
@@ -21,15 +18,45 @@ class WipayServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('wipay-voucher', function ($app) {
-            $base_uri = ($app['config']->get('app.env') === 'local')
-                ? "https://sandbox.wipayfinancial.com/v1/"
-                : "https://wipayfinancial.com/v1/"
+            $app_env = $app['config']['wipay.environment'];
+
+            $account_number = ( $app_env === 'sandbox' )
+                ? 4630
+                : $app['config']->get('wipay.account_number')
             ;
-            $client = new Client([
-                'base_uri' => $base_uri,
-                'headers' => ['content-type' => 'application/x-www-form-urlencoded']
-            ]);
-            return new WipayVoucher($client);
+            $base_uri = ( $app_env === 'local')
+                ? 'https://sandbox.wipayfinancial.com/v1/voucher_pay'
+                : 'https://wipayfinancial.com/v1/voucher_pay'
+            ;
+
+            $headers = ['Content-Type: application/x-www-form-urlencoded'];
+
+            return new WipayVoucher($account_number, $base_uri, $headers);
+        });
+
+        $this->app->bind('wipay-card', function ($app) {
+            $app_env = $app['config']['wipay.environment'];
+
+            $account_number = ( $app_env === 'sandbox' )
+                ? 1234567890
+                : $app['config']->get('wipay.account_number');
+
+            $api_key = ( $app_env === 'sandbox' )
+                ? 123
+                : $app['config']->get('wipay.api_key');
+
+            $base_uri = 'https://tt.wipayfinancial.com/plugins/payments/request';
+            $headers = [
+                'Accept: application/json',
+                'Content-Type: application/x-www-form-urlencoded'
+            ];
+
+            return new WipayCard(
+                account_number: $account_number,
+                api_key: $api_key,
+                base_uri: $base_uri,
+                headers: $headers
+            );
         });
     }
 }

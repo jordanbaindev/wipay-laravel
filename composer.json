@@ -24,8 +24,8 @@
                 "Jordanbaindev\\Wipay\\WipayServiceProvider"
             ],
             "aliases": {
-                "WipayCard": "Jordanbaindev\\Wipay\\Facade\\WipayCard",
-                "WipayVoucher": "Jordanbaindev\\Wipay\\Facade\\WipayVoucher"
+                "WipayCard": "Jordanbaindev\\Wipay\\Facades\\WipayCard",
+                "WipayVoucher": "Jordanbaindev\\Wipay\\Facades\\WipayVoucher"
             }
         }
     }
