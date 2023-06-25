@@ -8,15 +8,21 @@ use Jordanbaindev\Wipay\Exceptions\InvalidParameterException;
 
 class WipayVoucher
 {
-    private $base_uri, $headers, $account_number;
+    private string $base_uri;
+    private array $headers = [
+        'Content-Type: application/x-www-form-urlencoded'
+    ];
 
-    public function __construct(int $account_number, string $base_uri, array $headers) {
-        $this->account_number = $account_number;
-        $this->base_uri = $base_uri;
-        $this->headers = $headers;
+    public function __construct(
+        private int $account_number,
+        private bool $is_sandbox
+    ) {
+        $this->base_uri = $is_sandbox
+            ? 'https://sandbox.wipayfinancial.com/v1/voucher_pay'
+            : 'https://wipayfinancial.com/v1/voucher_pay';
     }
 
-    public function pay(float $total, string $voucher, string $details = '')
+    public function process(float $total, string $voucher, string $details = '')
     {
         $validated = $this->validation([
             'account_number' => $this->account_number,

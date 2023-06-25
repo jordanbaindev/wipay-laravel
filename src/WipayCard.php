@@ -8,24 +8,20 @@ use Jordanbaindev\Wipay\Exceptions\InvalidParameterException;
 
 class WipayCard
 {
-    private
-        $environment,
-        $fee_structure,
-        $origin,
-        $version
-    ;
+    private string $base_uri = 'https://tt.wipayfinancial.com/plugins/payments/request';
+    private array $headers = [
+        'Accept: application/json',
+        'Content-Type: application/x-www-form-urlencoded'
+    ];
 
     public function __construct(
         private string $account_number,
         private string $api_key,
-        private string $base_uri,
-        private array $headers
-    ) {
-        $this->environment = 'sandbox'; //config('wipay.environment');
-        $this->fee_structure = config('wipay.fee_structure');
-        $this->origin = config('wipay.origin');
-        $this->version = config('wipay.version');
-    }
+        private string $environment,
+        private string $fee_structure,
+        private string $origin,
+        private string $version,
+    ) {}
 
     public function process(
         string|int $order_id,

@@ -18,44 +18,31 @@ class WipayServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('wipay-voucher', function ($app) {
-            $app_env = $app['config']['wipay.environment'];
+            $config = $app['config']['wipay'];
+            $is_sandbox = $config['environment'] === 'sandbox';
 
-            $account_number = ( $app_env === 'sandbox' )
-                ? 4630
-                : $app['config']->get('wipay.account_number')
-            ;
-            $base_uri = ( $app_env === 'local')
-                ? 'https://sandbox.wipayfinancial.com/v1/voucher_pay'
-                : 'https://wipayfinancial.com/v1/voucher_pay'
-            ;
+            $account_number = $is_sandbox ? 4630 : $config['account_number'];
 
-            $headers = ['Content-Type: application/x-www-form-urlencoded'];
-
-            return new WipayVoucher($account_number, $base_uri, $headers);
+            return new WipayVoucher(
+                account_number: $account_number,
+                is_sandbox: $is_sandbox
+            );
         });
 
         $this->app->bind('wipay-card', function ($app) {
-            $app_env = $app['config']['wipay.environment'];
+            $config = $app['config']['wipay'];
+            $is_sandbox = ! $config['environment'] === 'sandbox';
 
-            $account_number = ( $app_env === 'sandbox' )
-                ? 1234567890
-                : $app['config']->get('wipay.account_number');
-
-            $api_key = ( $app_env === 'sandbox' )
-                ? 123
-                : $app['config']->get('wipay.api_key');
-
-            $base_uri = 'https://tt.wipayfinancial.com/plugins/payments/request';
-            $headers = [
-                'Accept: application/json',
-                'Content-Type: application/x-www-form-urlencoded'
-            ];
+            $account_number = $is_sandbox ? 1234567890 : $config['account_number'];
+            $api_key = $is_sandbox ? 123 : $config['api_key'];
 
             return new WipayCard(
                 account_number: $account_number,
                 api_key: $api_key,
-                base_uri: $base_uri,
-                headers: $headers
+                environment: $config['environment'],
+                fee_structure: $config['fee_structure'],
+                origin: $config['origin'],
+                version: $config['version']
             );
         });
     }
