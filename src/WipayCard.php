@@ -43,7 +43,7 @@ class WipayCard
             'origin' => $this->origin,
             'environment' => $this->environment,
 
-            'avs' => $avs,
+            // 'avs' => $avs,
             'country_code' => $country_code,
             'currency' => $currency,
             'data' => json_encode($data),

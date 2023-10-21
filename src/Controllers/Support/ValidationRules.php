@@ -10,7 +10,7 @@ class ValidationRules
     {
         return [
             'account_number' => 'required|numeric',
-            'avs' => 'required|boolean',
+            'avs' => 'boolean',
             'country_code' => [
                 'required',
                 Rule::in(['TT'])

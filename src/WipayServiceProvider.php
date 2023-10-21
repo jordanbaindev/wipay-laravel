@@ -31,7 +31,7 @@ class WipayServiceProvider extends ServiceProvider
 
         $this->app->bind('wipay-card', function ($app) {
             $config = $app['config']['wipay'];
-            $is_sandbox = ! $config['environment'] === 'sandbox';
+            $is_sandbox = $config['environment'] === 'sandbox';
 
             $account_number = $is_sandbox ? 1234567890 : $config['account_number'];
             $api_key = $is_sandbox ? 123 : $config['api_key'];

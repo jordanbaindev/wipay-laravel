@@ -26,7 +26,7 @@ class WipayVoucher
     {
         $validated = $this->validation([
             'account_number' => $this->account_number,
-            // 'details' => $details,
+            'details' => $details,
             'total' => $total,
             'voucher' => $voucher
         ],ValidationRules::pay_voucher());
