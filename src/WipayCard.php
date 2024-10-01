@@ -30,7 +30,9 @@ class WipayCard
         string $fname = null,
         string $lname = null,
         string $email = null,
+        string $phone = null,
         int $avs = 0,
+        $zipcode = 868,
         string $currency = 'TTD',
         string $country_code = 'TT',
         array $data = [],
@@ -54,9 +56,11 @@ class WipayCard
             'version' => $this->version,
             'fname' => $fname,
             'lname' => $lname,
-            'email' => $email
+            'email' => $email,
+            'phone' => $phone,
+            'zipcode' => $zipcode
         ], ValidationRules::card());
-
+        // dd($validated);
         $curl = curl_init($this->base_uri);
         curl_setopt_array($curl, [
             CURLOPT_FOLLOWLOCATION => false,

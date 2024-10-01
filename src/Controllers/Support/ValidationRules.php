@@ -10,7 +10,7 @@ class ValidationRules
     {
         return [
             'account_number' => 'required|numeric',
-            'avs' => 'boolean',
+            'avs' => '',
             'country_code' => [
                 'required',
                 Rule::in(['TT'])
@@ -40,7 +40,9 @@ class ValidationRules
 
             'fname' => 'string|max:30',
             'lname' => 'string|max:30',
-            'email' => 'string|max:50'
+            'email' => 'string|max:50',
+            'phone' => 'between:1,20',
+            'zipcode' => 'alpha_num|between:1,10'
         ];
     }
 
